@@ -30,6 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnNewButton = new System.Windows.Forms.Button();
             this.btnInsert = new System.Windows.Forms.Button();
             this.tbxName = new System.Windows.Forms.TextBox();
@@ -37,6 +38,9 @@
             this.lblName = new System.Windows.Forms.Label();
             this.lblId = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn_tab2_DeleteRecord = new System.Windows.Forms.Button();
+            this.tBox_tab2_RecordId = new System.Windows.Forms.TextBox();
+            this.lbl_tab2_RecordId = new System.Windows.Forms.Label();
             this.btn_tab2_Clear = new System.Windows.Forms.Button();
             this.btn_tab2_Submit = new System.Windows.Forms.Button();
             this.tBox_tab2_TotalValue = new System.Windows.Forms.TextBox();
@@ -62,11 +66,9 @@
             this.lbl_tab2_ASXCode = new System.Windows.Forms.Label();
             this.lbl_tab2_ContractNote = new System.Windows.Forms.Label();
             this.lbl_tab2_Id = new System.Windows.Forms.Label();
-            this.lbl_tab2_RecordId = new System.Windows.Forms.Label();
-            this.tBox_tab2_RecordId = new System.Windows.Forms.TextBox();
-            this.btn_tab2_DeleteRecord = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.grpBox_tab2_IncDec.SuspendLayout();
             this.SuspendLayout();
@@ -78,11 +80,12 @@
             this.tabControl1.Location = new System.Drawing.Point(11, 10);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(725, 369);
+            this.tabControl1.Size = new System.Drawing.Size(725, 428);
             this.tabControl1.TabIndex = 6;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Controls.Add(this.btnNewButton);
             this.tabPage1.Controls.Add(this.btnInsert);
             this.tabPage1.Controls.Add(this.tbxName);
@@ -92,10 +95,19 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(527, 341);
+            this.tabPage1.Size = new System.Drawing.Size(717, 400);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(28, 175);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 25;
+            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.TabIndex = 12;
             // 
             // btnNewButton
             // 
@@ -178,10 +190,36 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(717, 341);
+            this.tabPage2.Size = new System.Drawing.Size(717, 400);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btn_tab2_DeleteRecord
+            // 
+            this.btn_tab2_DeleteRecord.Location = new System.Drawing.Point(544, 98);
+            this.btn_tab2_DeleteRecord.Name = "btn_tab2_DeleteRecord";
+            this.btn_tab2_DeleteRecord.Size = new System.Drawing.Size(93, 23);
+            this.btn_tab2_DeleteRecord.TabIndex = 25;
+            this.btn_tab2_DeleteRecord.Text = "DeleteRecord";
+            this.btn_tab2_DeleteRecord.UseVisualStyleBackColor = true;
+            this.btn_tab2_DeleteRecord.Click += new System.EventHandler(this.btn_tab2_DeleteRecord_Click);
+            // 
+            // tBox_tab2_RecordId
+            // 
+            this.tBox_tab2_RecordId.Location = new System.Drawing.Point(544, 57);
+            this.tBox_tab2_RecordId.Name = "tBox_tab2_RecordId";
+            this.tBox_tab2_RecordId.Size = new System.Drawing.Size(153, 23);
+            this.tBox_tab2_RecordId.TabIndex = 24;
+            // 
+            // lbl_tab2_RecordId
+            // 
+            this.lbl_tab2_RecordId.AutoSize = true;
+            this.lbl_tab2_RecordId.Location = new System.Drawing.Point(546, 36);
+            this.lbl_tab2_RecordId.Name = "lbl_tab2_RecordId";
+            this.lbl_tab2_RecordId.Size = new System.Drawing.Size(54, 15);
+            this.lbl_tab2_RecordId.TabIndex = 23;
+            this.lbl_tab2_RecordId.Text = "RecordId";
             // 
             // btn_tab2_Clear
             // 
@@ -396,32 +434,6 @@
             this.lbl_tab2_Id.TabIndex = 0;
             this.lbl_tab2_Id.Text = "Id";
             // 
-            // lbl_tab2_RecordId
-            // 
-            this.lbl_tab2_RecordId.AutoSize = true;
-            this.lbl_tab2_RecordId.Location = new System.Drawing.Point(546, 36);
-            this.lbl_tab2_RecordId.Name = "lbl_tab2_RecordId";
-            this.lbl_tab2_RecordId.Size = new System.Drawing.Size(54, 15);
-            this.lbl_tab2_RecordId.TabIndex = 23;
-            this.lbl_tab2_RecordId.Text = "RecordId";
-            // 
-            // tBox_tab2_RecordId
-            // 
-            this.tBox_tab2_RecordId.Location = new System.Drawing.Point(544, 57);
-            this.tBox_tab2_RecordId.Name = "tBox_tab2_RecordId";
-            this.tBox_tab2_RecordId.Size = new System.Drawing.Size(153, 23);
-            this.tBox_tab2_RecordId.TabIndex = 24;
-            // 
-            // btn_tab2_DeleteRecord
-            // 
-            this.btn_tab2_DeleteRecord.Location = new System.Drawing.Point(544, 98);
-            this.btn_tab2_DeleteRecord.Name = "btn_tab2_DeleteRecord";
-            this.btn_tab2_DeleteRecord.Size = new System.Drawing.Size(93, 23);
-            this.btn_tab2_DeleteRecord.TabIndex = 25;
-            this.btn_tab2_DeleteRecord.Text = "DeleteRecord";
-            this.btn_tab2_DeleteRecord.UseVisualStyleBackColor = true;
-            this.btn_tab2_DeleteRecord.Click += new System.EventHandler(this.btn_tab2_DeleteRecord_Click);
-            // 
             // MyInputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -430,9 +442,11 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "MyInputForm";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MyInputForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.grpBox_tab2_IncDec.ResumeLayout(false);
@@ -480,5 +494,6 @@
         private Button btn_tab2_DeleteRecord;
         private TextBox tBox_tab2_RecordId;
         private Label lbl_tab2_RecordId;
+        private DataGridView dataGridView1;
     }
 }

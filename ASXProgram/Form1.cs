@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Data.Common;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace ASXProgram
 {
@@ -16,6 +17,32 @@ namespace ASXProgram
         {
             InitializeComponent();
         }
+
+        private void MyInputForm_Load(object sender, EventArgs e)
+        {
+            string connectionString = "Data Source = BENSQLTRAININGM;Initial Catalog=BENASXDATABASE;Integrated Security=true";
+            string sqlQuery = "SELECT * FROM ShareTransactions WHERE ASXCode = @Value";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@Value", "CBA");
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        dataGridView1.DataSource = dataTable;
+                    }
+                }
+            }
+        }
+
+
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
@@ -156,5 +183,7 @@ namespace ASXProgram
                 }
             }
         }
+
+
     }
 }
