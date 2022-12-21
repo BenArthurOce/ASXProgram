@@ -254,6 +254,8 @@
             this.tBox_tab2_Brokerage.Name = "tBox_tab2_Brokerage";
             this.tBox_tab2_Brokerage.Size = new System.Drawing.Size(100, 23);
             this.tBox_tab2_Brokerage.TabIndex = 19;
+            this.tBox_tab2_Brokerage.TextChanged += new System.EventHandler(this.tBox_tab2_Brokerage_TextChanged);
+            this.tBox_tab2_Brokerage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_tab2_Brokerage_KeyPress);
             // 
             // tBox_tab2_TradeValue
             // 
@@ -261,6 +263,8 @@
             this.tBox_tab2_TradeValue.Name = "tBox_tab2_TradeValue";
             this.tBox_tab2_TradeValue.Size = new System.Drawing.Size(100, 23);
             this.tBox_tab2_TradeValue.TabIndex = 18;
+            this.tBox_tab2_TradeValue.TextChanged += new System.EventHandler(this.tBox_tab2_TradeValue_TextChanged);
+            this.tBox_tab2_TradeValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_tab2_TradeValue_KeyPress);
             // 
             // tBox_tab2_UnitPrice
             // 
@@ -268,6 +272,8 @@
             this.tBox_tab2_UnitPrice.Name = "tBox_tab2_UnitPrice";
             this.tBox_tab2_UnitPrice.Size = new System.Drawing.Size(100, 23);
             this.tBox_tab2_UnitPrice.TabIndex = 17;
+            this.tBox_tab2_UnitPrice.TextChanged += new System.EventHandler(this.tBox_tab2_UnitPrice_TextChanged);
+            this.tBox_tab2_UnitPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_tab2_UnitPrice_KeyPress);
             // 
             // tBox_tab2_Quantity
             // 
@@ -275,6 +281,8 @@
             this.tBox_tab2_Quantity.Name = "tBox_tab2_Quantity";
             this.tBox_tab2_Quantity.Size = new System.Drawing.Size(100, 23);
             this.tBox_tab2_Quantity.TabIndex = 16;
+            this.tBox_tab2_Quantity.TextChanged += new System.EventHandler(this.tBox_tab2_Quantity_TextChanged);
+            this.tBox_tab2_Quantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tBox_tab2_Quantity_KeyPress);
             // 
             // tBox_tab2_Type
             // 
@@ -438,7 +446,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(891, 450);
             this.Controls.Add(this.tabControl1);
             this.Name = "MyInputForm";
             this.Text = "Form1";

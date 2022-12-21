@@ -8,6 +8,7 @@ using System.Data.Common;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
+using System.Globalization;
 
 namespace ASXProgram
 {
@@ -20,6 +21,12 @@ namespace ASXProgram
 
         private void MyInputForm_Load(object sender, EventArgs e)
         {
+
+           // tBox_tab2_Quantity.Text = "2";
+           // tBox_tab2_UnitPrice.Text = "22";
+          //  tBox_tab2_TradeValue.Text = "0";
+          //  tBox_tab2_Brokerage.Text = "0";
+
             string connectionString = "Data Source = BENSQLTRAININGM;Initial Catalog=BENASXDATABASE;Integrated Security=true";
             string sqlQuery = "SELECT * FROM ShareTransactions WHERE ASXCode = @Value";
 
@@ -185,5 +192,105 @@ namespace ASXProgram
         }
 
 
+        public bool isNumber(char ch, string text)
+        {
+            bool res = true;
+            char decimalChar = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+
+            //check if it´s a decimal separator and if doesn´t already have one in the text string
+            if (ch == decimalChar && text.IndexOf(decimalChar) != -1)
+            {
+                res = false;
+                return res;
+            }
+
+            //check if it´s a digit, decimal separator and backspace
+            if (!Char.IsDigit(ch) && ch != decimalChar && ch != (char)Keys.Back)
+                res = false;
+
+            return res;
+        }
+
+
+
+        private void tBox_tab2_Quantity_TextChanged(object sender, EventArgs e)
+        {
+            if (tBox_tab2_Quantity.Text.EndsWith(".")) {return;} else { CheckFormBlanksAndApplyMath(); }
+        }
+
+        private void tBox_tab2_UnitPrice_TextChanged(object sender, EventArgs e)
+        {
+            if (tBox_tab2_UnitPrice.Text.EndsWith(".")) { return; } else { CheckFormBlanksAndApplyMath(); }
+        }
+
+        private void tBox_tab2_TradeValue_TextChanged(object sender, EventArgs e)
+        {
+            if (tBox_tab2_TradeValue.Text.EndsWith(".")) { return; } else { CheckFormBlanksAndApplyMath(); }
+        }
+
+        private void tBox_tab2_Brokerage_TextChanged(object sender, EventArgs e)
+        {
+            if (tBox_tab2_Brokerage.Text.EndsWith(".")) { return; } else { CheckFormBlanksAndApplyMath(); }
+        }
+
+        private void CheckFormBlanksAndApplyMath()
+        {
+            float TradeValue = 0;
+            float TotalValue = 0;
+
+            // If "UnitPrice or Quantity are blank or null, this code is to be skipped
+            if (string.IsNullOrWhiteSpace(tBox_tab2_Quantity.Text) == true || string.IsNullOrWhiteSpace(tBox_tab2_UnitPrice.Text) == true)
+            {
+                tBox_tab2_TradeValue.Text = null;
+                tBox_tab2_TotalValue.Text = null;
+                return;     // Leave the method
+            }
+            else
+            {   // Calculate the Trade value and apply it to textbox
+                TradeValue = float.Parse(tBox_tab2_Quantity.Text) * float.Parse(tBox_tab2_UnitPrice.Text);
+                tBox_tab2_TradeValue.Text = TradeValue.ToString();
+            }
+
+            // If Brokerage is empty
+            if (string.IsNullOrWhiteSpace(tBox_tab2_Brokerage.Text) == true)
+            {
+                // Then calculate Total Value without brokerage
+                TotalValue = float.Parse(tBox_tab2_TradeValue.Text);
+                tBox_tab2_TotalValue.Text = TotalValue.ToString();
+            }
+
+            // If Brokerage is not empty
+            else
+            {
+                // Then calculate Total Value with brokerage
+                TotalValue = float.Parse(tBox_tab2_TradeValue.Text) + float.Parse(tBox_tab2_Brokerage.Text);
+                tBox_tab2_TotalValue.Text = TotalValue.ToString();
+            }
+        }
+
+
+
+        private void tBox_tab2_Quantity_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void tBox_tab2_UnitPrice_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!isNumber(e.KeyChar, tBox_tab2_UnitPrice.Text))
+                e.Handled = true;
+        }
+
+        private void tBox_tab2_TradeValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!isNumber(e.KeyChar, tBox_tab2_TradeValue.Text))
+                e.Handled = true;
+        }
+
+        private void tBox_tab2_Brokerage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!isNumber(e.KeyChar, tBox_tab2_Brokerage.Text))
+                e.Handled = true;
+        }
     }
 }
