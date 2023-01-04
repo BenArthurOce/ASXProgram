@@ -11,6 +11,7 @@ using static System.ComponentModel.Design.ObjectSelectorEditor;
 using System.Globalization;
 using static TheArtOfDevHtmlRenderer.Adapters.RGraphicsPath;
 using DocumentFormat.OpenXml.Vml.Presentation;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 
 namespace ASXProgram
@@ -45,9 +46,9 @@ namespace ASXProgram
                 }
             }
         }
-
-
-
+        //
+        //  Tab 1
+        //
         private void btnInsert_Click(object sender, EventArgs e)
         {
         }
@@ -79,11 +80,10 @@ namespace ASXProgram
                     }
                 }
             }
-
-
-
         }
-
+        //
+        //  Tab 2
+        //
         private void btn_tab2_Submit_Click(object sender, EventArgs e)
         {
             SubmitData();
@@ -200,7 +200,7 @@ namespace ASXProgram
 
         private void tBox_tab2_Quantity_TextChanged(object sender, EventArgs e)
         {
-            if (tBox_tab2_Quantity.Text.EndsWith(".")) {return;} else { CheckFormBlanksAndApplyMath(); }
+            if (tBox_tab2_Quantity.Text.EndsWith(".")) { return; } else { CheckFormBlanksAndApplyMath(); }
         }
 
         private void tBox_tab2_UnitPrice_TextChanged(object sender, EventArgs e)
@@ -296,7 +296,9 @@ namespace ASXProgram
 
             return res;
         }
-
+        //
+        //  Tab 3
+        //
         private void btn_tab3_generate_Click(object sender, EventArgs e)
         {
 
@@ -361,7 +363,6 @@ namespace ASXProgram
 
 
 
-
             string connectionString = "Data Source = BENSQLTRAININGM;Initial Catalog=BENASXDATABASE;Integrated Security=true";
             string sqlQuery = "SELECT [Prices].PriceClose FROM [ASXSharePrices] [Prices] WHERE ([Prices].ASXDate BETWEEN @StartDate AND @EndDate) AND [Prices].ASXCode = @ASXCode ORDER BY [Prices].ASXDate";
 
@@ -376,13 +377,19 @@ namespace ASXProgram
                 while (reader.Read())
                 {
                     // Read columns from the current row of the result set
-                    
+
                 }
             }
         }
 
-        private void btn_tab4_Find_Click(object sender, EventArgs e)
+
+        //
+        //  Tab 4
+        //
+        private void btn_tab4_Generate_Click(object sender, EventArgs e)
         {
+            string connectionString = "Data Source = BENSQLTRAININGM;Initial Catalog=BENASXDATABASE;Integrated Security=true";
+            string filePath = tBox_tab4_FileLocation.Text;
 
             OpenFileDialog openFileDialog1 = new OpenFileDialog
             {
@@ -405,25 +412,18 @@ namespace ASXProgram
             {
                 tBox_tab4_FileLocation.Text = openFileDialog1.FileName;
             }
-        }
-
-        private void btn_tab4_Submit_Click(object sender, EventArgs e)
-        {
-
-            string connectionString = "Data Source = BENSQLTRAININGM;Initial Catalog=BENASXDATABASE;Integrated Security=true";
-            string filePath = tBox_tab4_FileLocation.Text;
 
             string fileName = tBox_tab4_FileLocation.Text.ToString();
             string fullPath = tBox_tab4_FileLocation.Text.ToString();
 
             DataTable dt = new DataTable();
-            dt.Columns.AddRange(new DataColumn[7] 
+            dt.Columns.AddRange(new DataColumn[7]
             {   new DataColumn("ASXCode", typeof(string)),
                 new DataColumn("ASXDate",typeof(int)),
-                new DataColumn("PriceOpen",typeof(float)),
-                new DataColumn("PriceHigh",typeof(float)),
-                new DataColumn("PriceLow",typeof(float)),
-                new DataColumn("PriceClose",typeof(float)),
+                new DataColumn("PriceOpen",typeof(decimal)),
+                new DataColumn("PriceHigh",typeof(decimal)),
+                new DataColumn("PriceLow",typeof(decimal)),
+                new DataColumn("PriceClose",typeof(decimal)),
                 new DataColumn("VolumeTraded",typeof(int)),
             });
 
@@ -432,9 +432,9 @@ namespace ASXProgram
                 //if ((!string.IsNullOrEmpty(row)) || (!row.Contains("Date")))
                 //MessageBox.Show(row.ToString());
 
-               // if (string.IsNullOrEmpty(row) || row.Contains("date")) { continue; }
+                if (string.IsNullOrEmpty(row) || row.Contains("Date")) { continue; }
 
-                if ( row.Contains("Date")) { continue; }
+                //if (row.Contains("Date")) { continue; }
 
                 else
                 {
@@ -448,20 +448,7 @@ namespace ASXProgram
                 }
             }
 
-
-
-
-            // Read the contents of the text file into a string
-            // string text = File.ReadAllText(filePath);
-
-
-            // Split the text into lines
-            // string[] lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-
-
-            // Convert the lines into a list of objects
-            //  List<TextData> data = lines.Select(x => x.Split('\t')).Select(x => new TextData { Column1 = x[0], Column2 = x[1], Column3 = x[2] }).ToList();
-
+            dataGridView_tab4.DataSource = dt;
 
 
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -469,29 +456,125 @@ namespace ASXProgram
                 using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(con))
                 {
                     //Set the database table name
-                    sqlBulkCopy.DestinationTableName = "[dbo].[ASXSharePrices2Temp]";
+                    sqlBulkCopy.DestinationTableName = "[dbo].[ASXSharePricesTemp2]";
                     con.Open();
                     sqlBulkCopy.WriteToServer(dt);
                     con.Close();
                 }
-
-
-                // Use SqlBulkCopy to import the data into the database
-                //   using (SqlConnection connection = new SqlConnection(connectionString))
-                //   {
-                //       connection.Open();
-
-                //       using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection))
-                //       {
-                //           bulkCopy.DestinationTableName = "TextData";
-                //           bulkCopy.WriteToServer(data.AsDataTable());
-                //       }
-                //   }
-
-
-
-
             }
+        }
+
+
+        private void btn_tab4_FindV2_Click(object sender, EventArgs e)
+        {
+            AddTextFilesToDataTable();
+        }
+
+
+        private void btn_tab4_Import_Click(object sender, EventArgs e)
+        {
+            int rowCount = dataGridView_tab4_Notepads.Rows.Count;
+            MessageBox.Show(rowCount.ToString());
+
+            for (int i = 0; i < dataGridView_tab4_Notepads.Rows.Count; i++)
+            {
+                // do something with each row
+                DataGridViewRow row = dataGridView_tab4_Notepads.Rows[i];
+
+                // access cells in the row using the Cells property
+                string cellValue = row.Cells[0].Value.ToString();
+
+                MessageBox.Show(cellValue);
+            }
+        }
+
+
+
+
+
+
+        private void AddTextFilesToDataTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[5]
+            {   new DataColumn("FilePath", typeof(string)),
+                new DataColumn("FileName", typeof(string)),
+                new DataColumn("DateUploaded",typeof(DateTime)),
+                new DataColumn("FileSize",typeof(int)),
+                new DataColumn("PriceHigh",typeof(int)),
+            });
+
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            {
+                InitialDirectory = @"C:\Users\vboxuser\Desktop\ASXHistoricalPrices",
+                Title = "Browse Text Files",
+                Multiselect = true,
+
+                CheckFileExists = true,
+                CheckPathExists = true,
+
+                DefaultExt = "txt",
+                Filter = "txt files (*.txt)|*.txt",
+                FilterIndex = 2,
+                RestoreDirectory = true,
+
+                ReadOnlyChecked = true,
+                ShowReadOnly = true
+            };
+
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+
+                // get the list of selected file names
+                string[] fileNames = openFileDialog1.FileNames;
+
+                // iterate over the file names
+                foreach (string fileName in fileNames)
+                {
+                    dt.Rows.Add();
+                    int i = 0;
+
+                    FileInfo fileInfo = new FileInfo(fileName);
+                    string fileInfo_Path = fileInfo.FullName;
+                    string fileInfo_Name = fileInfo.Name;
+                    DateTime currentDateTime = DateTime.Now;
+                    string fileInfo_Size = fileInfo.Length.ToString();
+
+
+                    // Number of Rows in File
+                    string[] lines = File.ReadAllLines(fileName);
+                    int fileInfo_RowCount = lines.Length;
+
+                    // Add All File properties to a list for a row
+                    List<string> ListOfFileInformation = new List<string>();
+                    ListOfFileInformation.Add(fileInfo_Path);
+                    ListOfFileInformation.Add(fileInfo_Name);
+                    ListOfFileInformation.Add(currentDateTime.ToString());
+                    ListOfFileInformation.Add(fileInfo_Size);
+                    ListOfFileInformation.Add(fileInfo_RowCount.ToString());
+
+                    foreach (string cell in ListOfFileInformation)
+                    {
+                        dt.Rows[dt.Rows.Count - 1][i] = cell;
+                        i++;
+                    }
+                }
+
+                // Put all the file data into the datatable
+                dataGridView_tab4_Notepads.DataSource = dt;
+            }
+        }
+
+        private void ImportASingleTextFile()
+        {
+
+            // We get the information of a file
+            // We make a datatable of the file contents
+
+            // Push the file contents to SQL
+            // Push the file information to SQL
+
         }
     }
 }

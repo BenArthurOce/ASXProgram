@@ -86,9 +86,13 @@
             this.PriceTable1_Nov = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PriceTable1_Dec = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btn_tab4_Import = new System.Windows.Forms.Button();
+            this.lbl_tab4_Header = new System.Windows.Forms.Label();
+            this.btn_tab4_FindV2 = new System.Windows.Forms.Button();
+            this.dataGridView_tab4_Notepads = new System.Windows.Forms.DataGridView();
+            this.btn_tab4_GenerateTest = new System.Windows.Forms.Button();
+            this.dataGridView_tab4 = new System.Windows.Forms.DataGridView();
             this.tBox_tab4_FileLocation = new System.Windows.Forms.TextBox();
-            this.btn_tab4_Find = new System.Windows.Forms.Button();
-            this.btn_tab4_Submit = new System.Windows.Forms.Button();
             this.opFilDiag_tab4_Open = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -98,6 +102,8 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tab3)).BeginInit();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tab4_Notepads)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tab4)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -617,9 +623,13 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.btn_tab4_Import);
+            this.tabPage4.Controls.Add(this.lbl_tab4_Header);
+            this.tabPage4.Controls.Add(this.btn_tab4_FindV2);
+            this.tabPage4.Controls.Add(this.dataGridView_tab4_Notepads);
+            this.tabPage4.Controls.Add(this.btn_tab4_GenerateTest);
+            this.tabPage4.Controls.Add(this.dataGridView_tab4);
             this.tabPage4.Controls.Add(this.tBox_tab4_FileLocation);
-            this.tabPage4.Controls.Add(this.btn_tab4_Find);
-            this.tabPage4.Controls.Add(this.btn_tab4_Submit);
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -628,32 +638,70 @@
             this.tabPage4.Text = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // btn_tab4_Import
+            // 
+            this.btn_tab4_Import.Location = new System.Drawing.Point(433, 121);
+            this.btn_tab4_Import.Name = "btn_tab4_Import";
+            this.btn_tab4_Import.Size = new System.Drawing.Size(75, 23);
+            this.btn_tab4_Import.TabIndex = 9;
+            this.btn_tab4_Import.Text = "Import";
+            this.btn_tab4_Import.UseVisualStyleBackColor = true;
+            this.btn_tab4_Import.Click += new System.EventHandler(this.btn_tab4_Import_Click);
+            // 
+            // lbl_tab4_Header
+            // 
+            this.lbl_tab4_Header.AutoSize = true;
+            this.lbl_tab4_Header.Location = new System.Drawing.Point(44, 26);
+            this.lbl_tab4_Header.Name = "lbl_tab4_Header";
+            this.lbl_tab4_Header.Size = new System.Drawing.Size(133, 15);
+            this.lbl_tab4_Header.TabIndex = 8;
+            this.lbl_tab4_Header.Text = "Importing Multiple Files";
+            // 
+            // btn_tab4_FindV2
+            // 
+            this.btn_tab4_FindV2.Location = new System.Drawing.Point(432, 54);
+            this.btn_tab4_FindV2.Name = "btn_tab4_FindV2";
+            this.btn_tab4_FindV2.Size = new System.Drawing.Size(75, 23);
+            this.btn_tab4_FindV2.TabIndex = 7;
+            this.btn_tab4_FindV2.Text = "FindV2";
+            this.btn_tab4_FindV2.UseVisualStyleBackColor = true;
+            this.btn_tab4_FindV2.Click += new System.EventHandler(this.btn_tab4_FindV2_Click);
+            // 
+            // dataGridView_tab4_Notepads
+            // 
+            this.dataGridView_tab4_Notepads.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_tab4_Notepads.Location = new System.Drawing.Point(44, 54);
+            this.dataGridView_tab4_Notepads.Name = "dataGridView_tab4_Notepads";
+            this.dataGridView_tab4_Notepads.RowTemplate.Height = 25;
+            this.dataGridView_tab4_Notepads.Size = new System.Drawing.Size(329, 321);
+            this.dataGridView_tab4_Notepads.TabIndex = 6;
+            // 
+            // btn_tab4_GenerateTest
+            // 
+            this.btn_tab4_GenerateTest.BackColor = System.Drawing.Color.Transparent;
+            this.btn_tab4_GenerateTest.Location = new System.Drawing.Point(863, 369);
+            this.btn_tab4_GenerateTest.Name = "btn_tab4_GenerateTest";
+            this.btn_tab4_GenerateTest.Size = new System.Drawing.Size(120, 23);
+            this.btn_tab4_GenerateTest.TabIndex = 4;
+            this.btn_tab4_GenerateTest.Text = "GenerateTest";
+            this.btn_tab4_GenerateTest.UseVisualStyleBackColor = false;
+            this.btn_tab4_GenerateTest.Click += new System.EventHandler(this.btn_tab4_Generate_Click);
+            // 
+            // dataGridView_tab4
+            // 
+            this.dataGridView_tab4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_tab4.Location = new System.Drawing.Point(764, 196);
+            this.dataGridView_tab4.Name = "dataGridView_tab4";
+            this.dataGridView_tab4.RowTemplate.Height = 25;
+            this.dataGridView_tab4.Size = new System.Drawing.Size(219, 150);
+            this.dataGridView_tab4.TabIndex = 3;
+            // 
             // tBox_tab4_FileLocation
             // 
-            this.tBox_tab4_FileLocation.Location = new System.Drawing.Point(30, 93);
+            this.tBox_tab4_FileLocation.Location = new System.Drawing.Point(764, 153);
             this.tBox_tab4_FileLocation.Name = "tBox_tab4_FileLocation";
-            this.tBox_tab4_FileLocation.Size = new System.Drawing.Size(360, 23);
+            this.tBox_tab4_FileLocation.Size = new System.Drawing.Size(219, 23);
             this.tBox_tab4_FileLocation.TabIndex = 2;
-            // 
-            // btn_tab4_Find
-            // 
-            this.btn_tab4_Find.Location = new System.Drawing.Point(504, 98);
-            this.btn_tab4_Find.Name = "btn_tab4_Find";
-            this.btn_tab4_Find.Size = new System.Drawing.Size(75, 23);
-            this.btn_tab4_Find.TabIndex = 1;
-            this.btn_tab4_Find.Text = "Find";
-            this.btn_tab4_Find.UseVisualStyleBackColor = true;
-            this.btn_tab4_Find.Click += new System.EventHandler(this.btn_tab4_Find_Click);
-            // 
-            // btn_tab4_Submit
-            // 
-            this.btn_tab4_Submit.Location = new System.Drawing.Point(504, 182);
-            this.btn_tab4_Submit.Name = "btn_tab4_Submit";
-            this.btn_tab4_Submit.Size = new System.Drawing.Size(75, 23);
-            this.btn_tab4_Submit.TabIndex = 0;
-            this.btn_tab4_Submit.Text = "Submit";
-            this.btn_tab4_Submit.UseVisualStyleBackColor = true;
-            this.btn_tab4_Submit.Click += new System.EventHandler(this.btn_tab4_Submit_Click);
             // 
             // opFilDiag_tab4_Open
             // 
@@ -687,6 +735,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tab3)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tab4_Notepads)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tab4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -751,9 +801,13 @@
         private DataGridViewTextBoxColumn PriceTable1_Nov;
         private DataGridViewTextBoxColumn PriceTable1_Dec;
         private TabPage tabPage4;
-        private Button btn_tab4_Submit;
         private TextBox tBox_tab4_FileLocation;
-        private Button btn_tab4_Find;
         private OpenFileDialog opFilDiag_tab4_Open;
+        private DataGridView dataGridView_tab4;
+        private Button btn_tab4_GenerateTest;
+        private DataGridView dataGridView_tab4_Notepads;
+        private Button btn_tab4_FindV2;
+        private Label lbl_tab4_Header;
+        private Button btn_tab4_Import;
     }
 }
