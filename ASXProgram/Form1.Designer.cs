@@ -137,6 +137,9 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(28, 175);
             this.dataGridView1.Name = "dataGridView1";
@@ -669,6 +672,8 @@
             // 
             // dataGridView_tab4_Notepads
             // 
+            this.dataGridView_tab4_Notepads.AllowUserToAddRows = false;
+            this.dataGridView_tab4_Notepads.AllowUserToDeleteRows = false;
             this.dataGridView_tab4_Notepads.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_tab4_Notepads.Location = new System.Drawing.Point(44, 54);
             this.dataGridView_tab4_Notepads.Name = "dataGridView_tab4_Notepads";

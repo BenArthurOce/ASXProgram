@@ -434,8 +434,6 @@ namespace ASXProgram
 
                 if (string.IsNullOrEmpty(row) || row.Contains("Date")) { continue; }
 
-                //if (row.Contains("Date")) { continue; }
-
                 else
                 {
                     dt.Rows.Add();
@@ -473,8 +471,6 @@ namespace ASXProgram
 
         private void btn_tab4_Import_Click(object sender, EventArgs e)
         {
-            int rowCount = dataGridView_tab4_Notepads.Rows.Count;
-            MessageBox.Show(rowCount.ToString());
 
             for (int i = 0; i < dataGridView_tab4_Notepads.Rows.Count; i++)
             {
@@ -484,8 +480,13 @@ namespace ASXProgram
                 // access cells in the row using the Cells property
                 string cellValue = row.Cells[0].Value.ToString();
 
-                MessageBox.Show(cellValue);
+                //MessageBox.Show(cellValue);
+                ImportASingleTextFile(cellValue);
+
+                
             }
+
+            AddEntryToDocumentTable();
         }
 
 
@@ -501,7 +502,7 @@ namespace ASXProgram
                 new DataColumn("FileName", typeof(string)),
                 new DataColumn("DateUploaded",typeof(DateTime)),
                 new DataColumn("FileSize",typeof(int)),
-                new DataColumn("PriceHigh",typeof(int)),
+                new DataColumn("RowCount",typeof(int)),
             });
 
             OpenFileDialog openFileDialog1 = new OpenFileDialog
@@ -523,6 +524,7 @@ namespace ASXProgram
             };
 
 
+            int rowCount = 0;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
 
@@ -532,6 +534,7 @@ namespace ASXProgram
                 // iterate over the file names
                 foreach (string fileName in fileNames)
                 {
+                    rowCount += 1;
                     dt.Rows.Add();
                     int i = 0;
 
@@ -566,15 +569,78 @@ namespace ASXProgram
             }
         }
 
-        private void ImportASingleTextFile()
+        private void ImportASingleTextFile(string filePath)
         {
 
-            // We get the information of a file
-            // We make a datatable of the file contents
+            DataTable dt = new DataTable();
+            dt.Columns.AddRange(new DataColumn[7]
+            {   new DataColumn("ASXCode", typeof(string)),
+                new DataColumn("ASXDate",typeof(int)),
+                new DataColumn("PriceOpen",typeof(decimal)),
+                new DataColumn("PriceHigh",typeof(decimal)),
+                new DataColumn("PriceLow",typeof(decimal)),
+                new DataColumn("PriceClose",typeof(decimal)),
+                new DataColumn("VolumeTraded",typeof(int)),
+            });
 
-            // Push the file contents to SQL
-            // Push the file information to SQL
+            foreach (string row in File.ReadAllLines(filePath))
+            {
+                //if ((!string.IsNullOrEmpty(row)) || (!row.Contains("Date")))
+                //MessageBox.Show(row.ToString());
 
+                if (string.IsNullOrEmpty(row) || row.Contains("Date")) { continue; }
+
+                else
+                {
+                    dt.Rows.Add();
+                    int i = 0;
+                    foreach (string cell in row.Split(','))
+                    {
+                        dt.Rows[dt.Rows.Count - 1][i] = cell;
+                        i++;
+                    }
+                }
+            }
+
+
+            string connectionString = "Data Source = BENSQLTRAININGM;Initial Catalog=BENASXDATABASE;Integrated Security=true";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(con))
+                {
+                    //Set the database table name
+                    sqlBulkCopy.DestinationTableName = "[dbo].[ASXSharePricesTemp2]";
+                    con.Open();
+                    sqlBulkCopy.WriteToServer(dt);
+                    con.Close();
+                }
+            }
         }
+
+
+        private void AddEntryToDocumentTable()
+        {
+
+            DataTable dt = new DataTable();
+            dt = (DataTable)dataGridView_tab4_Notepads.DataSource;
+
+            string connectionString = "Data Source = BENSQLTRAININGM;Initial Catalog=BENASXDATABASE;Integrated Security=true";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlBulkCopy sqlBulkCopy = new SqlBulkCopy(con))
+                {
+                    //Set the database table name
+                    sqlBulkCopy.DestinationTableName = "[dbo].[DocumentUploadHistory]";
+                    con.Open();
+                    sqlBulkCopy.WriteToServer(dt);
+                    con.Close();
+                }
+            }
+        }
+
+
+
+
+
     }
 }
